@@ -16,6 +16,8 @@ The service is written in Go. It is separated into three separate modules that c
 * `Service`: this module contains the business logic for the service. All data mutations and calculations happen in this layer. 
 * `Database`: this module contains the functionality for storing and retrieving the data. It is responsible for transforming the data into the format necessary for it to be stored, and for transforming the data back into a format usable by the other modules in the service.
 
+![Architecture Diagram](architecture.png)
+
 ## Running the API
 
 ### Starting the Services
@@ -37,9 +39,7 @@ A full OpenAPI specification for the service API can be found [here](v1-spec.yam
 
 ## Tests
 
-### Unit Tests
-
-All unit tests can be run using Go's builtin testing using the following command:
+All tests can be run using Go's builtin testing using the following command:
 
 ```
 cd messageApi/
