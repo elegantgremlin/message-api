@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  title: Simple Message API
+  description: Simple API designed to create, read, update, delete, and list messages
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/v1
+    description: Version 1 of the API
+paths:
+  /messages:
+    get:
+      summary: Returns a list of messages.
+      description: Returns a full list of all messages currently being stored.
+      responses:
+        '200':    
+          description: A JSON array of messages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FullMessage'
+    post:
+      summary: Create a new message.
+      description: Creates a new message and stores it for later retrieval
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        '201':
+          description: Message was successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullMessage'
+  /messages/{id}:
+    parameters:
+      - name: id
+        in: path
+        description: Message id
+        required: true
+        schema:
+          type: integer
+    get:
+      summary: Returns a single message.
+      description: Returns a single message matching the provided id.
+      responses:
+        '200':    
+          description: A single message matching the provided id.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullMessage'
+        '404':
+          description: A message matching the id was not found.
+    post:
+      summary: Update an existing message
+      description: Updates an existing message matching the provided id.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Message'
+      responses:
+        '200':
+          description: Message was successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullMessage'
+        '404':
+          description: A message matching the id was not found.
+    delete:
+      summary: Delete an existing message
+      description: Delete an existing message matching the provided id.
+      responses:
+        '200':
+          description: Message was successfully deleted
+        '404':
+          description: A message matching the provided id was not found.
+components:
+  schemas:
+    FullMessage:
+      type: object
+      properties:
+        id: 
+          type: integer
+        message:
+          type: string
+        ispalindrome:
+          type: boolean
+    Message:
+      type: object
+      properties:
+        message:
+          type: string

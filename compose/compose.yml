@@ -1,0 +1,27 @@
+services:
+  messageapi:
+    build:
+      context: ../messageApi
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_DATABASE=messages
+      - DB_USER=localuser
+      - DB_PASSWORD=localpass
+      - PORT=8080
+      - GIN_MODE=debug
+    ports:
+      - "8080:8080"
+    volumes:
+      - ../messageApi:/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_PASSWORD=localpass
+      - POSTGRES_USER=localuser
+      - POSTGRES_DB=messages
+    ports:
+      - 5432:5432
